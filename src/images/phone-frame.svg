@@ -1,0 +1,44 @@
+<svg width="393" height="852" viewBox="0 0 393 852" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="frame-mask">
+    <!-- Fill all white -->
+    <rect width="393" height="852" fill="#fff"/>
+    <!-- Cutout: Fill screen area with black (transparent in mask) -->
+    <rect x="44" y="14" width="305" height="824" rx="43" fill="#000"/>
+  </mask>
+  <!-- Outer bezel, frame details, etc... -->
+  <g mask="url(#frame-mask)">
+    <!-- Your frame graphics here, NO white background! -->
+    <g filter="url(#a)">
+      <rect x="3" y="1" width="387" height="850" rx="62" fill="url(#b)" />
+      <rect x="3" y="1" width="387" height="850" rx="62" fill="url(#c)" />
+    </g>
+    <!-- other details ... -->
+    <g filter="url(#d)">
+      <!-- ...side details... -->
+    </g>
+    <g filter="url(#q)" shape-rendering="crispEdges">
+      <rect
+        x="16"
+        y="16"
+        width="361"
+        height="820"
+        rx="43"
+        fill="url(#r)" fill-opacity=".3"
+      />
+      <rect
+        x="16"
+        y="16"
+        width="361"
+        height="820"
+        rx="43"
+        stroke="#000" stroke-opacity=".07"
+      />
+    </g>
+    <g filter="url(#s)">
+      <rect x="154" y="29" width="56" height="5" rx="2.5" fill="#D4D4D4" />
+    </g>
+  </g>
+  <defs>
+    <!-- ...your filters/gradients... -->
+  </defs>
+</svg>
