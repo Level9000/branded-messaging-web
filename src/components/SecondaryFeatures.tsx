@@ -20,12 +20,10 @@ type Feature = {
 }
 
 const features: Feature[] = [
-  { name: 'First, you tell us about your business', description: 'Whether you’re starting from scratch or already up and running, we’ll meet you where you are and help you take the next step with confidence.', image: Guidance },
-  { name: "Next, We create a custom board of advisors", description: 'Experts with just the right levels of experience to guide your specific journey. Manage your board by creating new advisors when your business needs change.', image: Talent },
-  { name: "Then, we'll define your strategic vision", description: "Where do you want to take your business? What does success look like in 3, 6, or 18 months? We'll outline a roadmap that gets you to where you want to be.", image: Roadmap },
-  { name: 'Start talking with your board', description: 'Have one on one conversations, focus group sessions, and board meetings with your advisors to get the right level of guidance whenever you need it.', image: Momentum },
-  { name: 'Explore new ventures', description: 'Have another business idea? No problem. Create as many business profiles as you want and grow each business at their own pace.', image: Ventures },
-  { name: 'Keep momentum moving forward', description: 'We know what your vision is and every conversation you have with your board will result in action items that keep you accountable.', image: Building },
+  { name: 'First, create your business profile', description: 'Add your company name and logo. Sync your calendar and invoice management systems. Setup your pre-selected messages for easy one click sending.', image: Guidance },
+  { name: "Next, onboard your customers", description: 'Add contract information for your customers. We will store your conversation history, scheduling history and preferences, and invoice/payment history.', image: Talent },
+  { name: "Then, take your messaging to the next level", description: "Whether its appointment scheduling, navigating the day's events, or handling payments, Handmark makes it easy for you, and your customer.", image: Roadmap },
+  { name: 'Build customer relationships that last', description: "We'll store your conversations, appointment history, and payment history giving you the confidence to build lasting customer relationships.", image: Guidance },
 ]
 
 /* ------------ Mobile slider ------------ */

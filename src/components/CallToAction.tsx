@@ -14,8 +14,9 @@ export function CallToAction() {
               Getting started is easy
             </h2>
             <p className="mt-4 text-lg text-gray-300">
-              It takes less than a minute to sign up. Download the app and create your first
-              board of advisors. Try for free today.
+              Visit our interactive portal to experience Handmark for yourself.  Demo the customer experience
+              for yourself and see why Handmark is becoming the branded messaging solution of choice for small business
+              owners.
             </p>
             <div className="mt-8 flex justify-center">
               <AppStoreLink color="white" />

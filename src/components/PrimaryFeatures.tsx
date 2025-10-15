@@ -9,17 +9,17 @@ import Image, { StaticImageData } from 'next/image'
 /**
  * Desktop (portrait-ish) images
  */
-import Doer from '@/images/doer.png'
-import Dreamer from '@/images/dreamer.png'
-import Explorer from '@/images/explorer.png'
+import Portal from '@/images/portal.png'
+import Customer from '@/images/customer_profile.png'
+import Business from '@/images/business_profile.png'
 
 /**
  * Mobile (landscape) images — replace these with your actual filenames
  * e.g. doer_landscape.png, dreamer_landscape.png, explorer_landscape.png
  */
-import DoerMobile from '@/images/doer_mobile.png'
-import DreamerMobile from '@/images/dreamer_mobile.png'
-import ExplorerMobile from '@/images/explorer_mobile.png'
+import PortalMobile from '@/images/portal_mobile.png'
+import CustomerMobile from '@/images/customer_profile_mobile.png'
+import BusinessMobile from '@/images/business_profile_mobile.png'
 
 import { Container } from '@/components/Container'
 
@@ -63,28 +63,28 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    name: 'For the Doers',
+    name: 'First, create your business profile',
     description:
-      'Solo founders, scrappy entrepreneurs, small business owners, and side-hustlers who are learning by doing. You’re building in real-time and need a partner to help you figure it out as you go.',
-    image: Doer,
-    imageMobile: DoerMobile,
-    screen: (_props: ScreenProps) => <FeatureImageScreen src={Doer} />,
+      'Add your company name and logo. Sync your calendar and invoice management systems. Setup your pre-selected messages for easy one click sending.',
+    image: Business,
+    imageMobile: BusinessMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Business} />,
   },
   {
-    name: 'For the Dreamers',
+    name: 'Next, onboard your customers',
     description:
-      'Students and early-career professionals with bold ideas and big ambition. You’re ready to skip the corporate ladder and start building something of your own today.',
-    image: Dreamer,
-    imageMobile: DreamerMobile,
-    screen: (_props: ScreenProps) => <FeatureImageScreen src={Dreamer} />,
+      'Add contract information for your customers. We will store your conversation history, scheduling history and preferences, and invoice/payment history.',
+    image: Customer,
+    imageMobile: CustomerMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Customer} />,
   },
   {
-    name: 'For the Explorers',
+    name: 'Then, take your messaging to the next level',
     description:
-      "Working professionals ready for a change. You’ve had ideas simmering for years, but didn’t know where to start. Now you’re ready to finally take those first steps, with a bit of help.",
-    image: Explorer,
-    imageMobile: ExplorerMobile,
-    screen: (_props: ScreenProps) => <FeatureImageScreen src={Explorer} />,
+      "Whether its appointment scheduling, navigating the day's events, or handling payments, Handmark makes it easy for you, and your customer.",
+    image: Portal,
+    imageMobile: PortalMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Portal} />,
   },
 ]
 
@@ -271,7 +271,7 @@ export function PrimaryFeatures() {
         <Container>
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl">
             <h2 className="text-3xl sm:text-4xl font-medium tracking-tight text-white">
-              Who is it for?
+              How does it work?
             </h2>
             <p className="mt-2 text-lg sm:text-xl text-gray-300">
               We built Pocket Panel with three main customer groups in mind: the Doers, Dreamers, and Explorers.

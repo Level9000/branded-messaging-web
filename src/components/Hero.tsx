@@ -42,8 +42,8 @@ function PhoneHeroImage() {
     <div className="relative mx-auto w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px]
                     h-[520px] sm:h-[560px] lg:h-[580px] overflow-hidden">
       <Image
-        src="/images/pocket-panel-phone.png"
-        alt="Pocket Panel app on phone"
+        src="/images/handmark_logo.png"
+        alt="Handmark logo"
         fill
         priority
         className="object-top object-contain"
@@ -61,14 +61,16 @@ export function Hero() {
           {/* Copy / CTAs */}
           <div className="relative z-20 mx-auto max-w-2xl lg:col-span-6 lg:max-w-none lg:pt-6">
             <h1 className="text-5xl font-medium text-balance tracking-tight text-pocket-900">
-              Welcome to PRODUCT NAME
+              Welcome to Handmark
             </h1>
             <p className="mt-6 text-xl font-medium text-pocket-800">
               Put your stamp on branded messaging.
             </p>
             <p className="mt-6 text-lg text-gray-700">
-              Live Reels help take your reading experience to the next level.  With immersive video clips just a scan away,
-               you'll be transporting your audience into the world you always imagined for your book.
+              Handmark is the simplest way to manage customer communication and trust.
+              Send branded updates, confirm appointments, and share live arrival times all from one intuitive portal.
+              Handmark connects to your scheduling and payment tools, includes pre-written one-tap messages, and ensures
+              your customers always know exactly who’s reaching out.
             </p>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-4">
               <AppStoreLink />
