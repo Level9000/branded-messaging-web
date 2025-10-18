@@ -14,8 +14,7 @@ import Customer from '@/images/customer_profile.png'
 import Business from '@/images/business_profile.png'
 
 /**
- * Mobile (landscape) images — replace these with your actual filenames
- * e.g. doer_landscape.png, dreamer_landscape.png, explorer_landscape.png
+ * Mobile (landscape)
  */
 import PortalMobile from '@/images/portal_mobile.png'
 import CustomerMobile from '@/images/customer_profile_mobile.png'
@@ -61,27 +60,55 @@ type Feature = {
   screen: (_props: ScreenProps) => JSX.Element
 }
 
-const features: Feature[] = [
+/** ---------------- Content ---------------- **/
+const customerFeatures: Feature[] = [
   {
-    name: 'First, create your business profile',
+    name: 'All your services in one beautiful place',
     description:
-      'Add your company name and logo. Sync your calendar and invoice management systems. Setup your pre-selected messages for easy one click sending.',
-    image: Business,
-    imageMobile: BusinessMobile,
-    screen: (_props: ScreenProps) => <FeatureImageScreen src={Business} />,
-  },
-  {
-    name: 'Next, onboard your customers',
-    description:
-      'Add contract information for your customers. We will store your conversation history, scheduling history and preferences, and invoice/payment history.',
+      'View upcoming appointments, renew services, and track preferences. White-glove simplicity designed for luxury clients.',
     image: Customer,
     imageMobile: CustomerMobile,
     screen: (_props: ScreenProps) => <FeatureImageScreen src={Customer} />,
   },
   {
-    name: 'Then, take your messaging to the next level',
+    name: 'Effortless scheduling that respects your time',
     description:
-      "Whether its appointment scheduling, navigating the day's events, or handling payments, Handmark makes it easy for you, and your customer.",
+      'Reserve from curated openings that sync with your calendar so you only see times when you’re free.',
+    image: Portal,
+    imageMobile: PortalMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Portal} />,
+  },
+  {
+    name: 'Concierge messaging & payments',
+    description:
+      'Message your providers, review invoices, and tip seamlessly—without the back-and-forth.',
+    image: Business,
+    imageMobile: BusinessMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Business} />,
+  },
+]
+
+const contractorFeatures: Feature[] = [
+  {
+    name: 'Create your business profile',
+    description:
+      'Add your brand, connect your calendar and invoicing, and set up one-tap messages for common replies.',
+    image: Business,
+    imageMobile: BusinessMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Business} />,
+  },
+  {
+    name: 'Onboard clients with context',
+    description:
+      'Store conversation history, preferences, and service notes so every touchpoint feels personal.',
+    image: Customer,
+    imageMobile: CustomerMobile,
+    screen: (_props: ScreenProps) => <FeatureImageScreen src={Customer} />,
+  },
+  {
+    name: 'Run your day like a pro',
+    description:
+      "Scheduling, reminders, and payments—organized in a single portal so you can focus on exceptional service.",
     image: Portal,
     imageMobile: PortalMobile,
     screen: (_props: ScreenProps) => <FeatureImageScreen src={Portal} />,
@@ -97,7 +124,7 @@ function usePrevious<T>(value: T) {
 }
 
 /* ---------------- Desktop / Tablet ---------------- */
-function FeaturesDesktop() {
+function FeaturesDesktop({ features }: { features: Feature[] }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const onChange = useDebouncedCallback((i: number) => setSelectedIndex(i), 100, {
     leading: true,
@@ -155,8 +182,7 @@ function FeaturesDesktop() {
 }
 
 /* ---------------- Mobile ---------------- */
-/* ---------------- Mobile ---------------- */
-function FeaturesMobile() {
+function FeaturesMobile({ features }: { features: Feature[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const slideContainerRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<HTMLDivElement[]>([])
@@ -185,8 +211,8 @@ function FeaturesMobile() {
         className="
           -mb-4 flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth pb-4
           [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
-          space-x-4 sm:space-x-6            /* ← positive gap between slides */
-          scroll-px-4 sm:scroll-px-6        /* ← padding at the ends so cards don't hug edges */
+          space-x-4 sm:space-x-6
+          scroll-px-4 sm:scroll-px-6
         "
       >
         {features.map((feature, i) => (
@@ -195,13 +221,9 @@ function FeaturesMobile() {
             ref={(ref) => {
               if (ref) slideRefs.current[i] = ref!
             }}
-            className="
-              flex-none snap-center
-              w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)]  /* ← keep full card visible + allow the gap */
-            "
+            className="flex-none snap-center w-[calc(100%-2rem)] sm:w-[calc(100%-3rem)]"
           >
             <div className="relative overflow-hidden rounded-3xl bg-gray-800 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
-              {/* Full-bleed, consistent image height across slides */}
               <div className="relative w-full aspect-[16/9]">
                 <Image
                   src={feature.imageMobile ?? feature.image}
@@ -213,7 +235,6 @@ function FeaturesMobile() {
                 />
               </div>
 
-              {/* Consistent text panel height + graceful clamp */}
               <div className="px-5 py-5 sm:px-6 sm:py-6 min-h-[180px]">
                 <h3 className="text-2xl font-extrabold leading-snug text-white sm:text-3xl">
                   {feature.name}
@@ -259,32 +280,60 @@ function FeaturesMobile() {
   )
 }
 
-
+/* ---------------- Wrapper with audience toggle ---------------- */
 export function PrimaryFeatures() {
   return (
     <section
       id="features"
-      aria-label="Pocket Panel audiences"
+      aria-label="White Glove portals"
       className="stitch-bottom stitch-top bg-pocket-950 pt-0 pb-0 text-[#ECC969]"
     >
       <div className="pt-20 pb-20 sm:pt-32 sm:pb-32">
         <Container>
           <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl">
             <h2 className="text-3xl sm:text-4xl font-medium tracking-tight text-white">
-              How does it work?
+              Here's how it works:
             </h2>
             <p className="mt-2 text-lg sm:text-xl text-gray-300">
-              We built Pocket Panel with three main customer groups in mind: the Doers, Dreamers, and Explorers.
-              Every feature was built to support the entrepreneurs who are ready to take control of the future that they envision for themselves.
+              Try our interactive demo below to experience both customer and contractor portals.
             </p>
           </div>
         </Container>
 
-        <div className="mt-16 md:hidden">
-          <FeaturesMobile />
-        </div>
-        <Container className="hidden md:mt-20 md:block">
-          <FeaturesDesktop />
+        {/* Top-level audience toggle */}
+        <Container className="mt-8">
+          <TabGroup>
+            <TabList className="mx-auto flex w-full max-w-xl items-center justify-center gap-3 rounded-xl bg-pocket-900/40 p-2">
+              <Tab className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-gray-200 data-selected:bg-pocket-800 data-selected:text-white data-focus:outline-hidden transition">
+                For Customers
+              </Tab>
+              <Tab className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-gray-200 data-selected:bg-pocket-800 data-selected:text-white data-focus:outline-hidden transition">
+                For Contractors
+              </Tab>
+            </TabList>
+
+            <TabPanels>
+              {/* Customers */}
+              <TabPanel>
+                <div className="mt-16 md:hidden">
+                  <FeaturesMobile features={customerFeatures} />
+                </div>
+                <Container className="hidden md:mt-20 md:block">
+                  <FeaturesDesktop features={customerFeatures} />
+                </Container>
+              </TabPanel>
+
+              {/* Contractors */}
+              <TabPanel>
+                <div className="mt-16 md:hidden">
+                  <FeaturesMobile features={contractorFeatures} />
+                </div>
+                <Container className="hidden md:mt-20 md:block">
+                  <FeaturesDesktop features={contractorFeatures} />
+                </Container>
+              </TabPanel>
+            </TabPanels>
+          </TabGroup>
         </Container>
       </div>
     </section>

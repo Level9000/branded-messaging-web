@@ -1,35 +1,86 @@
+// components/Pricing.tsx
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import clsx from 'clsx'
 import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 
 const APP_STORE_URL = 'https://apps.apple.com/us/app/pocket-panel/id6745844239'
 
-const plans = [
+type PlanType = Readonly<{
+  name: string
+  featured: boolean
+  price: Readonly<{ Monthly: string; Annually: string }>
+  description: string
+  button: { label: string; href: string }
+  features: ReadonlyArray<string>
+}>
+
+/* ---------------- Audience-specific plans ---------------- */
+const customerPlans: PlanType[] = [
+  {
+    name: 'Guest',
+    featured: false,
+    price: { Monthly: '$0', Annually: '$0' },
+    description:
+      'Access your concierge portal. View services, confirm appointments, and message your providers.',
+    button: { label: 'Create your portal', href: APP_STORE_URL },
+    features: [
+      'Personal customer portal',
+      'Secure messaging',
+      'Appointment confirmations',
+    ],
+  },
+  {
+    name: 'Concierge',
+    featured: true,
+    price: { Monthly: '$9', Annually: '$84' },
+    description:
+      'VIP features for frequent clients—priority scheduling, saved preferences, and consolidated invoices.',
+    button: { label: 'Start 7-day trial', href: APP_STORE_URL },
+    features: [
+      'Everything in Guest, plus:',
+      'Priority scheduling windows',
+      'Saved preferences & notes',
+      'Invoice history in one place',
+    ],
+  },
+  {
+    name: 'Private',
+    featured: false,
+    price: { Monthly: 'Contact us', Annually: 'Contact us' },
+    description:
+      'White-glove experiences for families or estates with multiple properties or providers.',
+    button: { label: 'Contact us', href: '/support' },
+    features: ['Dedicated concierge line', 'Multi-profile management', 'Custom preferences'],
+  },
+]
+
+const contractorPlans: PlanType[] = [
   {
     name: 'Starter',
     featured: false,
     price: { Monthly: '$0', Annually: '$0' },
     description:
-      'Generate your board and enjoy strategic 1 on 1 conversations with your advisors. No credit card required.',
+      'Create your business profile and start managing relationships. No credit card required.',
     button: { label: 'Get started today', href: APP_STORE_URL },
-    features: ['AI Board of Advisors', '1:1 sessions with your AI advisors', 'One business profile'],
+    features: ['Business profile', '1:1 AI advisor sessions', 'One client list'],
   },
   {
     name: 'Pro',
     featured: true,
     price: { Monthly: '$25', Annually: '$200' },
     description:
-      'Take your business to the next level with action based structured workshops, professional coaching, board meetings, and focus groups.',
+      'Action-based workshops, coaching, focus groups, and advanced scheduling & payments.',
     button: { label: 'Try for free', href: APP_STORE_URL },
     features: [
-      'Includes everything in Starter, plus:',
+      'Everything in Starter, plus:',
       'Multi-agent focus groups',
       'Guided workshops',
       'Professional coaching',
-      'Unlimited business profiles',
+      'Advanced scheduling & payments',
     ],
   },
   {
@@ -37,12 +88,13 @@ const plans = [
     featured: false,
     price: { Monthly: 'Contact us', Annually: 'Contact us' },
     description:
-      'Tailored solutions for organizations that need scale, control, and customization.',
+      'Tailored solutions for teams that need scale, control, and customization.',
     button: { label: 'Contact us', href: '/support' },
-    features: ['Custom branded experience', 'Bulk licensing', 'Expanded reporting capabilities'],
+    features: ['Custom branded experience', 'Bulk licensing', 'Expanded reporting'],
   },
-] as const
+]
 
+/* ---------------- Shared UI ---------------- */
 function CheckIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
@@ -82,6 +134,7 @@ function Plan({
   featured?: boolean
 }) {
   const isDark = featured
+  const currentPrice = price[activePeriod]
 
   return (
     <section
@@ -94,17 +147,8 @@ function Plan({
         {name}
       </h3>
 
-      <p className={clsx('relative mt-3 flex tracking-tight', 'text-3xl sm:text-3xl', isDark ? 'text-white' : 'text-gray-900')}>
-        {price.Monthly === price.Annually ? (
-          price.Monthly
-        ) : (
-          <>
-            <span className="transition duration-300">{price.Monthly}</span>
-            <span className="absolute top-0 left-0 -translate-x-6 opacity-0 transition duration-300">
-              {price.Annually}
-            </span>
-          </>
-        )}
+      <p className={clsx('mt-3 flex tracking-tight', 'text-3xl sm:text-3xl', isDark ? 'text-white' : 'text-gray-900')}>
+        {currentPrice}
       </p>
 
       <p className={clsx('mt-3', 'text-base leading-relaxed sm:text-sm', isDark ? 'text-white/80' : 'text-gray-700')}>
@@ -155,7 +199,13 @@ function Plan({
 }
 
 /* ------------ Mobile swipe (carousel) ------------ */
-function PricingMobile({ activePeriod }: { activePeriod: 'Monthly' | 'Annually' }) {
+function PricingMobile({
+                         activePeriod,
+                         plans,
+                       }: {
+  activePeriod: 'Monthly' | 'Annually'
+  plans: ReadonlyArray<PlanType>
+}) {
   const [activeIndex, setActiveIndex] = useState(0)
   const slideContainerRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<HTMLDivElement[]>([])
@@ -230,6 +280,24 @@ function PricingMobile({ activePeriod }: { activePeriod: 'Monthly' | 'Annually' 
   )
 }
 
+/* ------------ Desktop/Tablet grid ------------ */
+function PricingGrid({
+                       activePeriod,
+                       plans,
+                     }: {
+  activePeriod: 'Monthly' | 'Annually'
+  plans: ReadonlyArray<PlanType>
+}) {
+  return (
+    <div className="mx-auto mt-12 sm:mt-20 hidden md:grid max-w-5xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-6xl md:grid-cols-3 lg:items-end justify-center">
+      {plans.map((plan) => (
+        <Plan key={plan.name} {...plan} activePeriod={activePeriod} featured={plan.featured} />
+      ))}
+    </div>
+  )
+}
+
+/* ------------ Wrapper with audience toggle ------------ */
 export function Pricing() {
   const [activePeriod] = useState<'Monthly' | 'Annually'>('Monthly')
 
@@ -250,15 +318,31 @@ export function Pricing() {
             </h2>
           </div>
 
-          {/* Mobile: swipeable */}
-          <PricingMobile activePeriod={activePeriod} />
+          {/* Audience toggle */}
+          <TabGroup>
+            <TabList className="mx-auto mt-8 flex w-full max-w-xl items-center justify-center gap-3 rounded-xl bg-gray-900/10 p-2">
+              <Tab className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-gray-700 data-selected:bg-white data-selected:text-gray-900 data-focus:outline-hidden transition">
+                For Customers
+              </Tab>
+              <Tab className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-gray-700 data-selected:bg-white data-selected:text-gray-900 data-focus:outline-hidden transition">
+                For Contractors
+              </Tab>
+            </TabList>
 
-          {/* Desktop/Tablet: 3-card grid */}
-          <div className="mx-auto mt-12 sm:mt-20 hidden md:grid max-w-5xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-6xl md:grid-cols-3 lg:items-end justify-center">
-            {plans.map((plan) => (
-              <Plan key={plan.name} {...plan} activePeriod={activePeriod} featured={plan.featured} />
-            ))}
-          </div>
+            <TabPanels>
+              {/* Customers */}
+              <TabPanel>
+                <PricingMobile activePeriod={activePeriod} plans={customerPlans} />
+                <PricingGrid activePeriod={activePeriod} plans={customerPlans} />
+              </TabPanel>
+
+              {/* Contractors */}
+              <TabPanel>
+                <PricingMobile activePeriod={activePeriod} plans={contractorPlans} />
+                <PricingGrid activePeriod={activePeriod} plans={contractorPlans} />
+              </TabPanel>
+            </TabPanels>
+          </TabGroup>
         </Container>
       </div>
     </section>

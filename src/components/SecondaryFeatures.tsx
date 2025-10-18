@@ -2,6 +2,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import clsx from 'clsx'
 import Image, { StaticImageData } from 'next/image'
 import { Container } from '@/components/Container'
@@ -19,16 +20,63 @@ type Feature = {
   image: StaticImageData
 }
 
-const features: Feature[] = [
-  { name: 'First, create your business profile', description: 'Add your company name and logo. Sync your calendar and invoice management systems. Setup your pre-selected messages for easy one click sending.', image: Guidance },
-  { name: "Next, onboard your customers", description: 'Add contract information for your customers. We will store your conversation history, scheduling history and preferences, and invoice/payment history.', image: Talent },
-  { name: "Then, take your messaging to the next level", description: "Whether its appointment scheduling, navigating the day's events, or handling payments, Handmark makes it easy for you, and your customer.", image: Roadmap },
-  { name: 'Build customer relationships that last', description: "We'll store your conversations, appointment history, and payment history giving you the confidence to build lasting customer relationships.", image: Guidance },
+/** ------- Audience-specific content ------- */
+const customerFeatures: Feature[] = [
+  {
+    name: 'Your services, beautifully organized',
+    description:
+      'View everything you’ve booked, what’s due soon, and what can wait. A simple portal designed for luxury clients.',
+    image: Roadmap,
+  },
+  {
+    name: 'Reserve from curated openings',
+    description:
+      'Pick from times that already respect your calendar. No double-booking, no back-and-forth.',
+    image: Momentum,
+  },
+  {
+    name: 'Concierge messaging & invoices',
+    description:
+      'Chat with providers, confirm details, and review invoices—all without leaving your portal.',
+    image: Guidance,
+  },
+  {
+    name: 'Preference-led experiences',
+    description:
+      'We remember your notes, history, and preferences so every visit feels personal and seamless.',
+    image: Talent,
+  },
 ]
 
-/* ------------ Mobile slider ------------ */
+const contractorFeatures: Feature[] = [
+  {
+    name: 'Create your business profile',
+    description:
+      'Add your brand, connect calendars and payments, and set up one-tap messages for common replies.',
+    image: Guidance,
+  },
+  {
+    name: 'Onboard clients with context',
+    description:
+      'Store conversation history, preferences, scheduling, and payment timelines—organized automatically.',
+    image: Talent,
+  },
+  {
+    name: 'Elevate your daily operations',
+    description:
+      "From scheduling to payments, run everything in one place so you can focus on delivering white-glove service.",
+    image: Roadmap,
+  },
+  {
+    name: 'Build relationships that last',
+    description:
+      "Insights and history give you the confidence to serve like a true concierge—at scale.",
+    image: Building,
+  },
+]
+
 /* ------------ Mobile slider (uniform height) ------------ */
-function SecondaryFeaturesMobile() {
+function SecondaryFeaturesMobile({ features }: { features: Feature[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const slideContainerRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<HTMLDivElement[]>([])
@@ -60,7 +108,7 @@ function SecondaryFeaturesMobile() {
           scroll-px-4 sm:scroll-px-6
           md:hidden
         "
-        aria-label="How Pocket Panel works - steps"
+        aria-label="White Glove feature highlights"
       >
         {features.map((feature, i) => (
           <div
@@ -131,15 +179,72 @@ function SecondaryFeaturesMobile() {
   )
 }
 
+/* ------------ Desktop / Tablet grid ------------ */
+function SecondaryFeaturesGrid({ features }: { features: Feature[] }) {
+  return (
+    <ul
+      role="list"
+      className="mx-auto mt-12 hidden max-w-6xl grid-cols-1 gap-6 sm:mt-16 md:grid md:grid-cols-2"
+    >
+      {features.map((feature) => (
+        <li key={feature.name}>
+          <div
+            className="group relative overflow-hidden rounded-3xl bg-[#0D1B2A] ring-1 ring-white/5
+                       shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5
+                       h-64 md:h-72 lg:h-80"
+          >
+            {/* Left image slab */}
+            <div
+              className="absolute inset-y-0 left-0 w-[44%]"
+              style={{
+                clipPath: 'polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%)',
+                backgroundColor: '#0D1B2A',
+              }}
+            >
+              <div className="relative h-full w-full">
+                <Image
+                  src={feature.image}
+                  alt={feature.name}
+                  fill
+                  sizes="(min-width: 768px) 44vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Text side */}
+            <div className="relative ml-[44%] h-full">
+              <div className="flex h-full items-center pr-14 pl-6 sm:pl-8">
+                <div>
+                  <h3 className="text-2xl font-extrabold leading-tight text-[#F6F1EB]">
+                    {feature.name}
+                  </h3>
+                  <p className="mt-3 text-base leading-relaxed text-white/75">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* hover halo */}
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+              <div className="absolute inset-0 bg-[#ECC969]/5" />
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/* ------------ Wrapper with audience toggle ------------ */
 export function SecondaryFeatures() {
   return (
     <section
       id="secondary-features"
-      aria-label="Pocket Panel features"
-      // IMPORTANT: stitches use currentColor — set text to gold like PrimaryFeatures
+      aria-label="White Glove features"
       className="stitch-top stitch-bottom pt-0 pb-0 text-[#ECC969]"
       style={{
-        // extra safety if your stitch classes also read these
         borderColor: '#ECC969',
         backgroundImage: 'radial-gradient(#ECC969 1.5px, transparent 1.5px)',
       }}
@@ -148,69 +253,38 @@ export function SecondaryFeatures() {
         <Container>
           <div className="mx-auto max-w-2xl sm:text-center">
             <h2 className="text-3xl font-semibold tracking-tight text-[#0D1B2A]">
-              How does it work?
+              Two experiences. One white-glove platform.
             </h2>
             <p className="mt-3 text-lg text-[#0D1B2A]/70">
-              Pocket Panel helps you go from “just an idea” to something real, faster.
+              Choose the portal that fits your role—clients organize services; contractors manage relationships.
             </p>
           </div>
 
-          {/* mobile: swipeable */}
-          <SecondaryFeaturesMobile />
+          {/* Audience toggle */}
+          <TabGroup>
+            <TabList className="mx-auto mt-8 flex w-full max-w-xl items-center justify-center gap-3 rounded-xl bg-[#0D1B2A]/80 p-2">
+              <Tab className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-gray-200 data-selected:bg-[#0D1B2A] data-selected:text-white data-focus:outline-hidden transition">
+                For Customers
+              </Tab>
+              <Tab className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-medium text-gray-200 data-selected:bg-[#0D1B2A] data-selected:text-white data-focus:outline-hidden transition">
+                For Contractors
+              </Tab>
+            </TabList>
 
-          {/* desktop/tablet: original grid */}
-          <ul
-            role="list"
-            className="mx-auto mt-12 hidden max-w-6xl grid-cols-1 gap-6 sm:mt-16 md:grid md:grid-cols-2"
-          >
-            {features.map((feature) => (
-              <li key={feature.name}>
-                <div
-                  className="group relative overflow-hidden rounded-3xl bg-[#0D1B2A] ring-1 ring-white/5
-                             shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5
-                             h-64 md:h-72 lg:h-80"
-                >
-                  {/* Left image slab */}
-                  <div
-                    className="absolute inset-y-0 left-0 w-[44%]"
-                    style={{
-                      clipPath: 'polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%)',
-                      backgroundColor: '#0D1B2A',
-                    }}
-                  >
-                    <div className="relative h-full w-full">
-                      <Image
-                        src={feature.image}
-                        alt={feature.name}
-                        fill
-                        sizes="(min-width: 768px) 44vw, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
+            <TabPanels>
+              {/* Customers */}
+              <TabPanel>
+                <SecondaryFeaturesMobile features={customerFeatures} />
+                <SecondaryFeaturesGrid features={customerFeatures} />
+              </TabPanel>
 
-                  {/* Text side */}
-                  <div className="relative ml-[44%] h-full">
-                    <div className="flex h-full items-center pr-14 pl-6 sm:pl-8">
-                      <div>
-                        <h3 className="text-2xl font-extrabold leading-tight text-[#F6F1EB]">
-                          {feature.name}
-                        </h3>
-                        <p className="mt-3 text-base leading-relaxed text-white/75">
-                          {feature.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* hover halo */}
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-[#ECC969]/5" />
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+              {/* Contractors */}
+              <TabPanel>
+                <SecondaryFeaturesMobile features={contractorFeatures} />
+                <SecondaryFeaturesGrid features={contractorFeatures} />
+              </TabPanel>
+            </TabPanels>
+          </TabGroup>
         </Container>
       </div>
     </section>
