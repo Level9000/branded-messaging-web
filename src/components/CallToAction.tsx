@@ -14,8 +14,8 @@ export function CallToAction() {
               Getting started is easy
             </h2>
             <p className="mt-4 text-lg text-gray-300">
-              Visit our interactive portal to experience Handmark for yourself.  Demo the customer experience
-              for yourself and see why Handmark is becoming the branded messaging solution of choice for small business
+              Visit our interactive portal to experience White Glove Chat for yourself.  Demo the customer experience
+              for yourself and see why White Glove Chat is becoming the branded messaging solution of choice for small business
               owners.
             </p>
             <div className="mt-8 flex justify-center">

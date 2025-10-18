@@ -61,15 +61,15 @@ export function Hero() {
           {/* Copy / CTAs */}
           <div className="relative z-20 mx-auto max-w-2xl lg:col-span-6 lg:max-w-none lg:pt-6">
             <h1 className="text-5xl font-medium text-balance tracking-tight text-pocket-900">
-              Welcome to Handmark
+              Welcome to White Glove Chat
             </h1>
             <p className="mt-6 text-xl font-medium text-pocket-800">
               Put your stamp on branded messaging.
             </p>
             <p className="mt-6 text-lg text-gray-700">
-              Handmark is the simplest way to manage customer communication and trust.
+              White Glove Chat is the simplest way to manage customer communication and trust.
               Send branded updates, confirm appointments, and share live arrival times all from one intuitive portal.
-              Handmark connects to your scheduling and payment tools, includes pre-written one-tap messages, and ensures
+              White Glove Chat connects to your scheduling and payment tools, includes pre-written one-tap messages, and ensures
               your customers always know exactly who’s reaching out.
             </p>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-4">
