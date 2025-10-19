@@ -13,10 +13,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: {
     template: '%s - Pocket',
-    default: 'Live Reels - Immersive Experiences',
+    default: 'White Glove Chat - Put your stamp on branded messaging',
   },
   description:
-    'Bring Stories to Life. Instantly.',
+    'Your service is luxury.  ' +
+    'Now your messaging can be too.',
 }
 
 export default function RootLayout({
